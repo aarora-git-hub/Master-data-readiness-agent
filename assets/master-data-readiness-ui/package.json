@@ -1,0 +1,23 @@
+{
+  "name": "master-data-readiness-ui",
+  "version": "1.0.0",
+  "description": "Fiori application for Master Data Operational Readiness",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "@ui5/webcomponents": "^2",
+    "@ui5/webcomponents-fiori": "^2",
+    "@ui5/webcomponents-react": "^2",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-scripts": "5"
+  },
+  "browserslist": {
+    "production": [">0.2%", "not dead", "not op_mini all"],
+    "development": ["last 1 chrome version", "last 1 firefox version", "last 1 safari version"]
+  }
+}
