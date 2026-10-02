@@ -1,0 +1,48 @@
+{
+  "name": "master-data-readiness-cap",
+  "version": "1.0.0",
+  "description": "CAP service for Master Data Operational Readiness — audit trail and session persistence",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "cds watch",
+    "build": "cds build --production",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@sap/cds": "^8",
+    "@sap/xssec": "^3",
+    "express": "^4",
+    "hdb": "^0.19",
+    "passport": "^0"
+  },
+  "devDependencies": {
+    "@sap/cds-dk": "^8",
+    "jest": "^29",
+    "supertest": "^6"
+  },
+  "cds": {
+    "requires": {
+      "db": {
+        "[development]": {
+          "kind": "sqlite",
+          "credentials": {
+            "database": ":memory:"
+          }
+        },
+        "[production]": {
+          "kind": "hana",
+          "deploy-format": "hdbtable"
+        }
+      },
+      "auth": {
+        "[production]": {
+          "kind": "xsuaa"
+        },
+        "[development]": {
+          "kind": "dummy"
+        }
+      }
+    }
+  }
+}
