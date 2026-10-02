@@ -1,0 +1,14 @@
+---
+applications:
+  - name: master-data-readiness-ui
+    memory: 128M
+    disk_quota: 512M
+    instances: 1
+    buildpacks:
+      - staticfile_buildpack
+    routes:
+      - route: master-data-readiness-ui.cfapps.eu12-002.hana.ondemand.com
+    env:
+      FORCE_HTTPS: true
+    services:
+      - master-data-readiness-xsuaa
