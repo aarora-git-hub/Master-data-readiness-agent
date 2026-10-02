@@ -1,0 +1,10 @@
+apiVersion: solution.sap/v1
+kind: Solution
+
+metadata:
+  name: master-data-readiness-c9931
+  version: "1.0.0"
+  description: "Master Data Operational Readiness Agent — automates post-creation setup validation and guided task execution for Material, Plant, and Customer/BP objects in SAP S/4HANA"
+
+assets:
+  - ref: ./assets/master-data-readiness-agent/asset.yaml
