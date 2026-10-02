@@ -1,0 +1,72 @@
+{
+  "xsappname": "master-data-readiness",
+  "tenant-mode": "dedicated",
+  "description": "Security descriptor for Master Data Operational Readiness CAP service",
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.ReadinessRead",
+      "description": "Read readiness sessions and audit trail"
+    },
+    {
+      "name": "$XSAPPNAME.ReadinessWrite",
+      "description": "Create readiness sessions and audit events"
+    },
+    {
+      "name": "$XSAPPNAME.ReadinessAdmin",
+      "description": "Full access including session management"
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "ReadinessViewer",
+      "description": "Read-only access to readiness data",
+      "scope-references": ["$XSAPPNAME.ReadinessRead"]
+    },
+    {
+      "name": "ReadinessUser",
+      "description": "Standard user — read and write readiness data",
+      "scope-references": [
+        "$XSAPPNAME.ReadinessRead",
+        "$XSAPPNAME.ReadinessWrite"
+      ]
+    },
+    {
+      "name": "ReadinessAdmin",
+      "description": "Full administrative access",
+      "scope-references": [
+        "$XSAPPNAME.ReadinessRead",
+        "$XSAPPNAME.ReadinessWrite",
+        "$XSAPPNAME.ReadinessAdmin"
+      ]
+    }
+  ],
+  "role-collections": [
+    {
+      "name": "MasterDataReadiness_Viewer",
+      "description": "View readiness sessions and audit trail",
+      "role-template-references": [
+        "$XSAPPNAME.ReadinessViewer"
+      ]
+    },
+    {
+      "name": "MasterDataReadiness_User",
+      "description": "Standard operational readiness user",
+      "role-template-references": [
+        "$XSAPPNAME.ReadinessUser"
+      ]
+    },
+    {
+      "name": "MasterDataReadiness_Admin",
+      "description": "Master Data Governance Owner — full access",
+      "role-template-references": [
+        "$XSAPPNAME.ReadinessAdmin"
+      ]
+    }
+  ],
+  "oauth2-configuration": {
+    "token-validity": 43200,
+    "redirect-uris": [
+      "https://master-data-readiness-ui.cfapps.eu12-002.hana.ondemand.com/**"
+    ]
+  }
+}
