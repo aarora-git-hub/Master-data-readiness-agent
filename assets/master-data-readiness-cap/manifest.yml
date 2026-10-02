@@ -1,0 +1,18 @@
+---
+applications:
+  - name: master-data-readiness-cap
+    memory: 256M
+    disk_quota: 512M
+    instances: 1
+    buildpacks:
+      - nodejs_buildpack
+    command: npm start
+    health-check-type: http
+    health-check-http-endpoint: /health
+    routes:
+      - route: master-data-readiness-cap.cfapps.eu12-002.hana.ondemand.com
+    env:
+      NODE_ENV: production
+    services:
+      - master-data-readiness-hdi
+      - master-data-readiness-xsuaa
