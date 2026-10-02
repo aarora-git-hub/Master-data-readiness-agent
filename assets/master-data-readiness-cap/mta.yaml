@@ -1,0 +1,63 @@
+_schema-version: "3.3"
+ID: master-data-readiness
+version: 1.0.0
+description: Master Data Operational Readiness — CAP service and Fiori UI
+
+modules:
+
+  # ── CAP Service ────────────────────────────────────────────────────────────
+  - name: master-data-readiness-cap
+    type: nodejs
+    path: .
+    parameters:
+      memory: 256M
+      disk-quota: 512M
+      routes:
+        - route: master-data-readiness-cap.cfapps.eu12-002.hana.ondemand.com
+    build-parameters:
+      builder: npm
+      build-result: gen/srv
+      requires:
+        - name: master-data-readiness-cap-db-deployer
+    requires:
+      - name: master-data-readiness-hdi
+        group: SERVICE_REPLACEMENTS
+        properties:
+          envVarName: ServiceName
+          serviceName: ~{hdi-service-name}
+      - name: master-data-readiness-xsuaa
+    provides:
+      - name: cap-srv-url
+        properties:
+          url: ${default-url}
+
+  # ── HDI DB Deployer ────────────────────────────────────────────────────────
+  - name: master-data-readiness-cap-db-deployer
+    type: hdb
+    path: gen/db
+    parameters:
+      buildpack: nodejs_buildpack
+    requires:
+      - name: master-data-readiness-hdi
+
+resources:
+
+  # ── SAP HANA HDI Container ─────────────────────────────────────────────────
+  - name: master-data-readiness-hdi
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+    properties:
+      hdi-service-name: ${service-name}
+
+  # ── XSUAA ──────────────────────────────────────────────────────────────────
+  - name: master-data-readiness-xsuaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: xs-security.json
+      config:
+        xsappname: master-data-readiness
+        tenant-mode: dedicated
