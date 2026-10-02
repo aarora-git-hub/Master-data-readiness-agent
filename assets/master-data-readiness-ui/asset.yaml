@@ -1,0 +1,39 @@
+apiVersion: asset.sap/v1
+kind: Asset
+type: application
+
+metadata:
+  name: master-data-readiness-ui
+  version: "1.0.0"
+
+provides:
+  apis:
+    - name: master-data-readiness-ui
+      kind: rest
+      description: Fiori application for the Master Data Operational Readiness workflow
+
+container:
+  buildPath: .
+  port: 3000
+
+requires:
+  - name: master-data-readiness-agent
+    kind: agent
+    ordId: customer.build:agent:master-data-readiness-c9931.master-data-readiness-agent:v1
+  - name: master-data-readiness-cap
+    kind: asset
+    ordId: customer.build:apiResource:master-data-readiness-c9931.master-data-readiness-cap:v1
+
+probes:
+  liveness:
+    path: /
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+  readiness:
+    path: /
+    initialDelaySeconds: 5
+    periodSeconds: 5
+    timeoutSeconds: 3
+    failureThreshold: 3
