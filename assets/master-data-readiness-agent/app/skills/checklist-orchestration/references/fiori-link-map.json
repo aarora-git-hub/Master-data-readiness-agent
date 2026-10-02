@@ -1,0 +1,112 @@
+{
+  "tables": {
+    "A004": {
+      "description": "Pricing condition table — Material/Customer",
+      "tableCategory": "operational",
+      "fioriSemanticObject": "ConditionRecord",
+      "fioriAction": "manage",
+      "contextParams": ["SalesOrganization", "DistributionChannel", "Customer", "Material"],
+      "transactionCode": "VK11"
+    },
+    "A005": {
+      "description": "Pricing condition table — Customer/Material Group",
+      "tableCategory": "operational",
+      "fioriSemanticObject": "ConditionRecord",
+      "fioriAction": "manage",
+      "contextParams": ["SalesOrganization", "DistributionChannel", "Customer", "MaterialGroup"],
+      "transactionCode": "VK11"
+    },
+    "A006": {
+      "description": "Pricing condition table — Price List Type/Currency/Material",
+      "tableCategory": "operational",
+      "fioriSemanticObject": "ConditionRecord",
+      "fioriAction": "manage",
+      "contextParams": ["SalesOrganization", "DistributionChannel", "PriceListType", "Material"],
+      "transactionCode": "VK11"
+    },
+    "MARA": {
+      "description": "General material data",
+      "tableCategory": "operational",
+      "fioriSemanticObject": "Material",
+      "fioriAction": "maintain",
+      "contextParams": ["Material"],
+      "transactionCode": "MM02"
+    },
+    "MARC": {
+      "description": "Plant data for material",
+      "tableCategory": "operational",
+      "fioriSemanticObject": "Material",
+      "fioriAction": "maintain",
+      "contextParams": ["Material", "Plant"],
+      "transactionCode": "MM02"
+    },
+    "MVKE": {
+      "description": "Sales data for material",
+      "tableCategory": "operational",
+      "fioriSemanticObject": "Material",
+      "fioriAction": "maintain",
+      "contextParams": ["Material", "SalesOrganization", "DistributionChannel"],
+      "transactionCode": "MM02"
+    },
+    "TSW_LOCATION": {
+      "description": "TSW location master",
+      "tableCategory": "operational",
+      "fioriSemanticObject": "TSWLocation",
+      "fioriAction": "maintain",
+      "contextParams": ["Plant", "LocationType"],
+      "transactionCode": "OIL4"
+    },
+    "KNA1": {
+      "description": "Customer general data",
+      "tableCategory": "operational",
+      "fioriSemanticObject": "BusinessPartner",
+      "fioriAction": "manage",
+      "contextParams": ["BusinessPartner"],
+      "transactionCode": "BP"
+    },
+    "KNVV": {
+      "description": "Customer sales data",
+      "tableCategory": "operational",
+      "fioriSemanticObject": "BusinessPartner",
+      "fioriAction": "manage",
+      "contextParams": ["BusinessPartner", "SalesOrganization", "DistributionChannel", "Division"],
+      "transactionCode": "BP"
+    },
+    "T001W": {
+      "description": "Plants/Branches — org assignment of plant to company code",
+      "tableCategory": "transport-managed",
+      "fioriSemanticObject": null,
+      "fioriAction": null,
+      "contextParams": [],
+      "transactionCode": "OX10",
+      "trInstruction": "Create/assign plant in DEV system using transaction OX10, then transport to production via a Transport Request (TR)."
+    },
+    "TVKO": {
+      "description": "Sales organisations",
+      "tableCategory": "transport-managed",
+      "fioriSemanticObject": null,
+      "fioriAction": null,
+      "contextParams": [],
+      "transactionCode": "OVX5",
+      "trInstruction": "Define sales organisation in DEV system using transaction OVX5, then transport to production via a Transport Request (TR)."
+    },
+    "TVKWZ": {
+      "description": "Allowed plants per sales organisation",
+      "tableCategory": "transport-managed",
+      "fioriSemanticObject": null,
+      "fioriAction": null,
+      "contextParams": [],
+      "transactionCode": "OVX6",
+      "trInstruction": "Assign plant to sales organisation in DEV system using transaction OVX6, then transport to production via a Transport Request (TR)."
+    },
+    "TOVAK": {
+      "description": "Order types per sales area",
+      "tableCategory": "transport-managed",
+      "fioriSemanticObject": null,
+      "fioriAction": null,
+      "contextParams": [],
+      "transactionCode": "VOV8",
+      "trInstruction": "Configure order types in DEV system using transaction VOV8, then transport to production via a Transport Request (TR)."
+    }
+  }
+}
