@@ -6,8 +6,9 @@
  * The CAP audit service is called directly for read-only audit trail queries.
  */
 
-const AGENT_BASE_URL = process.env.REACT_APP_AGENT_URL || "http://localhost:5000";
+// All session and checklist calls go to the CAP service REST API
 const CAP_BASE_URL = process.env.REACT_APP_CAP_URL || "http://localhost:4004";
+const SESSIONS_URL = `${CAP_BASE_URL}/sessions`;
 
 async function request(url, options = {}) {
   const token = sessionStorage.getItem("auth_token") || "";
@@ -28,7 +29,7 @@ async function request(url, options = {}) {
 
 /** Create a new readiness session and retrieve the classified checklist. */
 export function createSession(params) {
-  return request(`${AGENT_BASE_URL}/sessions`, {
+  return request(`${SESSIONS_URL}`, {
     method: "POST",
     body: JSON.stringify(params),
   });
@@ -36,19 +37,19 @@ export function createSession(params) {
 
 /** Get the current session state including all step statuses. */
 export function getSession(sessionId) {
-  return request(`${AGENT_BASE_URL}/sessions/${sessionId}`);
+  return request(`${SESSIONS_URL}/${sessionId}`);
 }
 
 /** Get field definitions for a CUSTOM_TABLE or BRFPLUS step. */
 export function getFormMetadata(sessionId, stepId) {
-  return request(`${AGENT_BASE_URL}/sessions/${sessionId}/steps/${stepId}/form-metadata`, {
+  return request(`${SESSIONS_URL}/${sessionId}/steps/${stepId}/form-metadata`, {
     method: "POST",
   });
 }
 
 /** Submit form data and execute the write immediately. */
 export function submitStep(sessionId, stepId, fieldValues) {
-  return request(`${AGENT_BASE_URL}/sessions/${sessionId}/steps/${stepId}/submit`, {
+  return request(`${SESSIONS_URL}/${sessionId}/steps/${stepId}/submit`, {
     method: "POST",
     body: JSON.stringify({ fieldValues }),
   });
@@ -56,7 +57,7 @@ export function submitStep(sessionId, stepId, fieldValues) {
 
 /** Mark a step as User Confirmed (with optional evidence reference). */
 export function markStepComplete(sessionId, stepId, evidenceRef = null) {
-  return request(`${AGENT_BASE_URL}/sessions/${sessionId}/steps/${stepId}/mark-complete`, {
+  return request(`${SESSIONS_URL}/${sessionId}/steps/${stepId}/mark-complete`, {
     method: "POST",
     body: JSON.stringify({ evidenceRef }),
   });
@@ -64,14 +65,14 @@ export function markStepComplete(sessionId, stepId, evidenceRef = null) {
 
 /** Skip a Failed step (Cancelled by User). */
 export function skipStep(sessionId, stepId) {
-  return request(`${AGENT_BASE_URL}/sessions/${sessionId}/steps/${stepId}/skip`, {
+  return request(`${SESSIONS_URL}/${sessionId}/steps/${stepId}/skip`, {
     method: "POST",
   });
 }
 
 /** Trigger the final cross-check and attempt to declare operational readiness. */
 export function declareReady(sessionId) {
-  return request(`${AGENT_BASE_URL}/sessions/${sessionId}/declare-ready`, {
+  return request(`${SESSIONS_URL}/${sessionId}/declare-ready`, {
     method: "POST",
   });
 }
